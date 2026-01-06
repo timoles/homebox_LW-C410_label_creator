@@ -1,8 +1,8 @@
 import requests
 import os.path
 from dotenv import load_dotenv
-load_dotenv()
 
+load_dotenv()
 
 requests.packages.urllib3.disable_warnings()
 AUTH_CODE = os.getenv('auth_code')
@@ -20,14 +20,16 @@ def create_label(full_name, item_path):
     with open("./base_tag.lemd") as labelFile:
         labelFileContent = labelFile.read()
         item_name = input(f"Name on label for \"{full_name}\": ")
+        if item_name == "":
+            item_name = full_name
         final_label_content = labelFileContent.replace("ITEMURL", item_path.replace("/","\\/")).replace("TEXTPLACEHOLDER", item_name)
     return final_label_content
 
 def item_already_handled(item_path):
     item_id = item_path.split('/')[2]
     return os.path.isfile(f"./created_tags/{item_id}")
-    
-headers = {"Authorization": AUTH_CODE}
+
+headers = {"Authorization": AUTH_CODE} # TODO real login or check how to set API key. Currently taken from browser cookie
 resp = requests.get(f'{BASE_URL}/api/v1/items/export',verify=False, headers=headers)
 
 csv_file_lines = resp.text.split("\n")[1:]
