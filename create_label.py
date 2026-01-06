@@ -10,7 +10,7 @@ BASE_URL = os.getenv('base_url')
 
 def write_label(label_content, item_path):
     item_id = item_path.split('/')[2]
-    with (open(f"./created_tags/{item_id}", 'w+')) as label_file:
+    with (open(f"./created_tags/{item_id}.lemd", 'w+')) as label_file:
         label_file.write(label_content)
 
 def create_label(full_name, item_path):
@@ -27,7 +27,7 @@ def create_label(full_name, item_path):
 
 def item_already_handled(item_path):
     item_id = item_path.split('/')[2]
-    return os.path.isfile(f"./created_tags/{item_id}")
+    return os.path.isfile(f"./created_tags/{item_id}.lemd")
 
 headers = {"Authorization": AUTH_CODE} # TODO real login or check how to set API key. Currently taken from browser cookie
 resp = requests.get(f'{BASE_URL}/api/v1/items/export',verify=False, headers=headers)
