@@ -1,8 +1,6 @@
 import requests
 import os.path
 from dotenv import load_dotenv
-import json
-import copy
 
 load_dotenv()
 
